@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevClub JokenPô</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>JokenPô</h1>
+
+        <div class="buttons">
+            <button id="rock">&#x1F44A</button>
+            <button id="paper">&#x1f590</button>
+            <button id="scissors">&#x270c</button>
+        </div>
+
+        <p class="result"></p>
+
+        <p class="your-score">Sua Pontuação: <span id="playerScore">0</span></p>
+        <p class="machine-score"> Pontuação da Alexa: <span id="computerScore">0</span></p>
+
+    </div>
+
+    <script>
+        // Função para gerar a escolha aleatória da máquina (Pedra, Papel ou Tesoura)
+        function computerPlay() {
+            const choices = ["rock", "paper", "scissors"];
+            return choices[Math.floor(Math.random() * choices.length)];
+        }
+
+        // Função para determinar o resultado do jogo
+        function playRound(playerSelection, computerSelection) {
+            if (playerSelection === computerSelection) {
+                return "Empate!";
+            } else if (
+                (playerSelection === "rock" && computerSelection === "scissors") ||
+                (playerSelection === "paper" && computerSelection === "rock") ||
+                (playerSelection === "scissors" && computerSelection === "paper")
+            ) {
+                return "Você ganhou!";
+            } else {
+                return "Você perdeu!";
+            }
+        }
+
+        // Função principal que gerencia o jogo
+        function game(playerChoice) {
+            const computerChoice = computerPlay();
+            const result = playRound(playerChoice, computerChoice);
+            const playerScoreDisplay = document.getElementById("playerScore");
+            const computerScoreDisplay = document.getElementById("computerScore");
+            const resultDisplay = document.querySelector(".result");
+
+            resultDisplay.textContent = result;
+
+            if (result === "Você ganhou!") {
+                playerScoreDisplay.textContent = parseInt(playerScoreDisplay.textContent) + 1;
+            } else if (result === "Você perdeu!") {
+                computerScoreDisplay.textContent = parseInt(computerScoreDisplay.textContent) + 1;
+            }
+        }
+
+        // Event listeners para os botões
+        document.getElementById("rock").addEventListener("click", function () {
+            game("rock");
+        });
+        document.getElementById("paper").addEventListener("click", function () {
+            game("paper");
+        });
+        document.getElementById("scissors").addEventListener("click", function () {
+            game("scissors");
+        });
+    </script>
+
+</body>
+
+</html>
